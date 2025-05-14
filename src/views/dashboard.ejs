@@ -22,6 +22,7 @@
         </div>
         <div>
             <label for="targets">Target Currencies:</label>
+            <input type="text" id="currencySearch" placeholder="Search currencies..." class="currency-search">
             <select id="targets" name="targets" multiple class="currency-select">
                 <% availableCurrencies.forEach(currency => { %>
                     <option value="<%= currency %>" <%= targetCurrencies.includes(currency) ? 'selected' : '' %>><%= currency %></option>
@@ -40,4 +41,21 @@
             <p>1 <%= baseCurrency %> = <%= rate.toFixed(4) %> <%= currency %></p>
         </div>
     <% }); %>
-</div> 
+</div>
+
+<script>
+document.getElementById('currencySearch').addEventListener('input', function(e) {
+    const searchText = e.target.value.toLowerCase();
+    const select = document.getElementById('targets');
+    const options = select.getElementsByTagName('option');
+    
+    for (let option of options) {
+        const text = option.text.toLowerCase();
+        if (text.includes(searchText)) {
+            option.style.display = '';
+        } else {
+            option.style.display = 'none';
+        }
+    }
+});
+</script> 
