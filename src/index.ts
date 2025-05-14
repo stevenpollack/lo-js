@@ -3,6 +3,7 @@ import session from 'express-session';
 import path from 'path';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+import expressLayouts from 'express-ejs-layouts';
 
 dotenv.config();
 
@@ -20,6 +21,10 @@ app.use(session({
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(expressLayouts);
+app.set('layout', 'layout');
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
