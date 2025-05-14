@@ -15,15 +15,19 @@
         <div>
             <label for="base">Base Currency:</label>
             <select id="base" name="base">
-                <option value="USD" <%= baseCurrency === 'USD' ? 'selected' : '' %>>USD</option>
-                <option value="EUR" <%= baseCurrency === 'EUR' ? 'selected' : '' %>>EUR</option>
-                <option value="GBP" <%= baseCurrency === 'GBP' ? 'selected' : '' %>>GBP</option>
-                <option value="JPY" <%= baseCurrency === 'JPY' ? 'selected' : '' %>>JPY</option>
+                <% availableCurrencies.forEach(currency => { %>
+                    <option value="<%= currency %>" <%= baseCurrency === currency ? 'selected' : '' %>><%= currency %></option>
+                <% }); %>
             </select>
         </div>
         <div>
-            <label for="targets">Target Currencies (comma-separated):</label>
-            <input type="text" id="targets" name="targets" value="<%= targetCurrencies.join(',') %>" placeholder="EUR,GBP,JPY">
+            <label for="targets">Target Currencies:</label>
+            <select id="targets" name="targets" multiple class="currency-select">
+                <% availableCurrencies.forEach(currency => { %>
+                    <option value="<%= currency %>" <%= targetCurrencies.includes(currency) ? 'selected' : '' %>><%= currency %></option>
+                <% }); %>
+            </select>
+            <small>Hold Ctrl/Cmd to select multiple currencies</small>
         </div>
     </div>
     <button type="submit">Update Rates</button>

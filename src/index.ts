@@ -1,14 +1,24 @@
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
-import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import expressLayouts from 'express-ejs-layouts';
+import { CurrencyService } from './services/currencyService';
+
+// Extend Express Session interface
+declare module 'express-session' {
+  interface SessionData {
+    user?: {
+      username: string;
+    };
+  }
+}
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+const currencyService = CurrencyService.getInstance();
 
 // Session configuration
 app.use(session({
@@ -74,22 +84,27 @@ app.get('/dashboard', async (req, res) => {
   }
 
   const baseCurrency = req.query.base || 'USD';
-  const targetCurrencies = (req.query.targets || 'EUR,GBP,JPY').toString().split(',');
+  
+  // Handle the targets parameter properly
+  let targetCurrencies: string[];
+  if (Array.isArray(req.query.targets)) {
+    targetCurrencies = req.query.targets.map(t => t.toString());
+  } else if (typeof req.query.targets === 'string') {
+    targetCurrencies = req.query.targets.split(',');
+  } else {
+    targetCurrencies = ['EUR', 'GBP', 'JPY'];
+  }
 
   try {
-    const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`);
-    const data = await response.json();
-    
-    const rates = targetCurrencies.reduce((acc: Record<string, number>, currency: string) => {
-      acc[currency] = data.rates[currency];
-      return acc;
-    }, {});
+    const rates = await currencyService.getRates(baseCurrency, targetCurrencies);
+    const availableCurrencies = await currencyService.getAvailableCurrencies();
 
     res.render('dashboard', {
       user: req.session.user,
       baseCurrency,
       rates,
-      targetCurrencies
+      targetCurrencies,
+      availableCurrencies
     });
   } catch (error) {
     res.render('dashboard', {
