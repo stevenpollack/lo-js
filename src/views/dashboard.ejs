@@ -1,0 +1,41 @@
+<%- include('layout') %>
+
+<div class="header">
+    <h1>Currency Dashboard</h1>
+    <div>
+        Welcome, <%= user.username %>!
+        <a href="/logout"><button>Logout</button></a>
+    </div>
+</div>
+
+<% if (typeof error !== 'undefined') { %>
+    <div class="error"><%= error %></div>
+<% } %>
+
+<form action="/dashboard" method="GET">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+            <label for="base">Base Currency:</label>
+            <select id="base" name="base">
+                <option value="USD" <%= baseCurrency === 'USD' ? 'selected' : '' %>>USD</option>
+                <option value="EUR" <%= baseCurrency === 'EUR' ? 'selected' : '' %>>EUR</option>
+                <option value="GBP" <%= baseCurrency === 'GBP' ? 'selected' : '' %>>GBP</option>
+                <option value="JPY" <%= baseCurrency === 'JPY' ? 'selected' : '' %>>JPY</option>
+            </select>
+        </div>
+        <div>
+            <label for="targets">Target Currencies (comma-separated):</label>
+            <input type="text" id="targets" name="targets" value="<%= targetCurrencies.join(',') %>" placeholder="EUR,GBP,JPY">
+        </div>
+    </div>
+    <button type="submit">Update Rates</button>
+</form>
+
+<div class="rates-grid">
+    <% Object.entries(rates).forEach(([currency, rate]) => { %>
+        <div class="rate-card">
+            <h3><%= currency %></h3>
+            <p>1 <%= baseCurrency %> = <%= rate.toFixed(4) %> <%= currency %></p>
+        </div>
+    <% }); %>
+</div> 

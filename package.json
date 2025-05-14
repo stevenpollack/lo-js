@@ -1,0 +1,26 @@
+{
+  "name": "currency-dashboard",
+  "version": "1.0.0",
+  "description": "Server-side rendered currency conversion dashboard",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "express-session": "^1.17.3",
+    "node-fetch": "^2.7.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-session": "^1.17.10",
+    "@types/node": "^20.10.5",
+    "@types/node-fetch": "^2.6.11",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  }
+} 
