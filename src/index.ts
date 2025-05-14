@@ -4,6 +4,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import expressLayouts from 'express-ejs-layouts';
 import { CurrencyService } from './services/currencyService';
+import { CurrencyValidationService } from './services/currencyValidationService';
 
 // Extend Express Session interface
 declare module 'express-session' {
@@ -19,6 +20,11 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 const currencyService = CurrencyService.getInstance();
+const currencyValidationService = CurrencyValidationService.getInstance();
+
+// Initialize currency validation service
+currencyValidationService.initialize()
+  .catch(err => console.error('Failed to initialize currency validation service:', err));
 
 // Session configuration
 app.use(session({
@@ -31,7 +37,7 @@ app.use(session({
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(expressLayouts);
+app.use(expressLayouts as any);
 app.set('layout', 'layout');
 app.set('layout extractScripts', true);
 app.set('layout extractStyles', true);
@@ -83,19 +89,14 @@ app.get('/dashboard', async (req, res) => {
     return res.redirect('/');
   }
 
-  const baseCurrency = req.query.base || 'USD';
-  
-  // Handle the targets parameter properly
-  let targetCurrencies: string[];
-  if (Array.isArray(req.query.targets)) {
-    targetCurrencies = req.query.targets.map(t => t.toString());
-  } else if (typeof req.query.targets === 'string') {
-    targetCurrencies = req.query.targets.split(',');
-  } else {
-    targetCurrencies = ['EUR', 'GBP', 'JPY'];
-  }
-
   try {
+    // Sanitize and validate base currency
+    const baseCurrency = currencyValidationService.sanitizeBaseCurrency(req.query.base);
+    
+    // Sanitize and validate target currencies
+    const targetCurrencies = currencyValidationService.sanitizeTargetCurrencies(req.query.targets);
+    
+    // Fetch rates and available currencies
     const rates = await currencyService.getRates(baseCurrency, targetCurrencies);
     const availableCurrencies = await currencyService.getAvailableCurrencies();
 
@@ -107,6 +108,7 @@ app.get('/dashboard', async (req, res) => {
       availableCurrencies
     });
   } catch (error) {
+    console.error('Error processing request:', error);
     res.render('dashboard', {
       user: req.session.user,
       error: 'Failed to fetch exchange rates'
