@@ -1,12 +1,23 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "targetDefaults": {
-    "build": {
-      "outputs": [
-        "{projectRoot}/dist"
-      ],
-      "cache": true
+  "npmScope": "lo-js",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
-  "nxCloudId": "68252fb63a58926ab5ab56cb"
-}
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
+  "projects": {
+    "currency-dashboard-backend": "apps/currency-dashboard-backend",
+    "currency-dashboard-backend-e2e": "apps/currency-dashboard-backend-e2e"
+  }
+} 
