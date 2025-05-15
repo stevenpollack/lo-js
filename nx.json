@@ -2,19 +2,35 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "lo-js",
   "plugins": [
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } }
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
   ],
-  "affected": { "defaultBase": "main" },
+  "affected": {
+    "defaultBase": "main"
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
     }
   },
-  "workspaceLayout": { "appsDir": "apps", "libsDir": "libs" },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
   "projects": {
     "currency-dashboard-backend": "apps/currency-dashboard-backend",
     "currency-dashboard-backend-e2e": "apps/currency-dashboard-backend-e2e"
   },
-  "nxCloudId": "68257916417e807fcaef22ba"
+  "nxCloudId": "68257916417e807fcaef22ba",
+  "namedInputs": {
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"],
+    "default": ["sharedGlobals"]
+  }
 }
