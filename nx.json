@@ -7,11 +7,19 @@
       "options": {
         "targetName": "lint"
       }
+    },
+    {
+      "plugin": "@nx/webpack/plugin",
+      "options": {
+        "buildTargetName": "webpack:build",
+        "serveTargetName": "webpack:serve",
+        "previewTargetName": "preview",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
     }
   ],
-  "affected": {
-    "defaultBase": "main"
-  },
+  "defaultBase": "main",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
