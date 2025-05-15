@@ -12,7 +12,7 @@
       "dependsOn": ["build"],
       "options": {
         "buildTarget": "currency-dashboard-backend:build",
-        "runBuildTargetDependencies": false,
+        "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
