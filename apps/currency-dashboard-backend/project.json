@@ -11,7 +11,7 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "currency-dashboard-backend:start",
+        "buildTarget": "currency-dashboard-backend:build",
         "runBuildTargetDependencies": false,
       },
       "configurations": {
