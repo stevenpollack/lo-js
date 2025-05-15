@@ -20,7 +20,7 @@ export const DEFAULT_CURRENCIES = [
   'NOK', // Norwegian Krone
   'SGD', // Singapore Dollar
   'KRW', // South Korean Won
-  'INR'  // Indian Rupee
+  'INR', // Indian Rupee
 ];
 
 /**
@@ -31,4 +31,4 @@ export const DEFAULT_BASE_CURRENCY = 'USD';
 /**
  * Default target currencies to display
  */
-export const DEFAULT_TARGET_CURRENCIES = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD']; 
+export const DEFAULT_TARGET_CURRENCIES = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD'];

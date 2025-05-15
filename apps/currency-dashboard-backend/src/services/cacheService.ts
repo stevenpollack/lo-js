@@ -12,9 +12,12 @@ export class CacheService {
     this.cache = new NodeCache({
       stdTTL: this.defaultTTL,
       checkperiod: 60, // Check for expired keys every minute
-      useClones: false // Store references to objects instead of cloning them
+      useClones: false, // Store references to objects instead of cloning them
     });
-    this.logger.debug('Cache service initialized with TTL', { ttl: this.defaultTTL, checkPeriod: 60 });
+    this.logger.debug('Cache service initialized with TTL', {
+      ttl: this.defaultTTL,
+      checkPeriod: 60,
+    });
   }
 
   public static getInstance(): CacheService {
@@ -56,4 +59,4 @@ export class CacheService {
     this.logger.debug('Cache stats retrieved', stats);
     return stats;
   }
-} 
+}

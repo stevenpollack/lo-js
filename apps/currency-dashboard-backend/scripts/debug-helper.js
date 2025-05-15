@@ -2,10 +2,10 @@
 
 /**
  * Debug Helper Script
- * 
+ *
  * This script helps with debugging by fetching and displaying information
  * about the currency service, available currencies, and cache status.
- * 
+ *
  * Usage:
  *   node scripts/debug-helper.js
  */
@@ -31,7 +31,7 @@ const styles = {
   blink: '\x1b[5m',
   reverse: '\x1b[7m',
   hidden: '\x1b[8m',
-  
+
   fg: {
     black: '\x1b[30m',
     red: '\x1b[31m',
@@ -42,7 +42,7 @@ const styles = {
     cyan: '\x1b[36m',
     white: '\x1b[37m',
   },
-  
+
   bg: {
     black: '\x1b[40m',
     red: '\x1b[41m',
@@ -52,12 +52,20 @@ const styles = {
     magenta: '\x1b[45m',
     cyan: '\x1b[46m',
     white: '\x1b[47m',
-  }
+  },
 };
 
 // Helper functions
 function printHeader(text) {
-  console.log('\n' + styles.bright + styles.fg.cyan + '===== ' + text + ' =====' + styles.reset);
+  console.log(
+    '\n' +
+      styles.bright +
+      styles.fg.cyan +
+      '===== ' +
+      text +
+      ' =====' +
+      styles.reset,
+  );
 }
 
 function printError(text) {
@@ -74,27 +82,30 @@ function printInfo(label, value) {
 
 async function getExchangeRates() {
   printHeader('Exchange Rate API Check');
-  
+
   try {
     printInfo('API URL', API_URL);
     const response = await axios.get(API_URL);
     printSuccess('API connection successful!');
-    
+
     printInfo('Base currency', response.data.base);
-    printInfo('Timestamp', new Date(response.data.timestamp * 1000).toISOString());
+    printInfo(
+      'Timestamp',
+      new Date(response.data.timestamp * 1000).toISOString(),
+    );
     printInfo('Total currencies', Object.keys(response.data.rates).length);
-    
+
     // Display a sample of the rates
     printHeader('Sample Exchange Rates');
     const rates = response.data.rates;
     const sampleCurrencies = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CNY'];
-    
-    sampleCurrencies.forEach(currency => {
+
+    sampleCurrencies.forEach((currency) => {
       if (rates[currency]) {
         printInfo(currency, rates[currency]);
       }
     });
-    
+
     return response.data;
   } catch (error) {
     printError('API connection failed!');
@@ -110,11 +121,11 @@ async function getExchangeRates() {
 
 async function checkEnvironment() {
   printHeader('Environment Variables');
-  
+
   printInfo('NODE_ENV', process.env.NODE_ENV || 'not set');
   printInfo('PORT', process.env.PORT || '3000 (default)');
   printInfo('LOG_LEVEL', process.env.LOG_LEVEL || 'not set (defaults to INFO)');
-  
+
   // Check for other important environment variables
   if (!process.env.SESSION_SECRET) {
     printError('Warning: SESSION_SECRET is not set!');
@@ -125,20 +136,23 @@ async function checkEnvironment() {
 
 // Main function
 async function main() {
-  console.log(styles.bright + styles.fg.yellow + 
-    '\n======================================' +
-    '\n Currency Dashboard Debug Helper' +
-    '\n======================================' + 
-    styles.reset);
-  
+  console.log(
+    styles.bright +
+      styles.fg.yellow +
+      '\n======================================' +
+      '\n Currency Dashboard Debug Helper' +
+      '\n======================================' +
+      styles.reset,
+  );
+
   await checkEnvironment();
   await getExchangeRates();
-  
+
   printHeader('Debug Helper Complete');
 }
 
 // Run the script
-main().catch(error => {
+main().catch((error) => {
   printError('Unexpected error:');
   console.error(error);
-}); 
+});
