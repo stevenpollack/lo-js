@@ -1,0 +1,83 @@
+{
+  "name": "currency-dashboard-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/currency-dashboard-backend/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "continuous": true,
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "currency-dashboard-backend:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "currency-dashboard-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "currency-dashboard-backend:build:production"
+        }
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node-dev --respawn --transpile-only src/index.ts",
+        "cwd": "apps/currency-dashboard-backend"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node dist/apps/currency-dashboard-backend/src/index.js"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/currency-dashboard-backend",
+        "main": "apps/currency-dashboard-backend/src/index.ts",
+        "tsConfig": "apps/currency-dashboard-backend/tsconfig.app.json",
+        "assets": [
+          {
+            "input": "apps/currency-dashboard-backend/src/views",
+            "glob": "**/*",
+            "output": "src/views"
+          }
+        ]
+      }
+    },
+    "env:local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/env-setup.js local",
+        "cwd": "apps/currency-dashboard-backend"
+      }
+    },
+    "env:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/env-setup.js prod",
+        "cwd": "apps/currency-dashboard-backend"
+      }
+    },
+    "start:prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx run currency-dashboard-backend:env:prod && nx run currency-dashboard-backend:build && nx run currency-dashboard-backend:start"
+      }
+    },
+    "debug": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/debug-helper.js",
+        "cwd": "apps/currency-dashboard-backend"
+      }
+    }
+  }
+}

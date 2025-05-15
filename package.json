@@ -1,38 +1,47 @@
 {
-  "name": "currency-dashboard",
+  "name": "lo-js",
   "version": "1.0.0",
-  "description": "Server-side rendered currency conversion dashboard",
-  "main": "dist/index.js",
+  "description": "Monorepo for currency dashboard and related projects",
+  "private": true,
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "dev:debug": "LOG_LEVEL=DEBUG ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
-    "env:local": "node scripts/env-setup.js local",
-    "env:prod": "node scripts/env-setup.js prod",
-    "start:prod": "npm run env:prod && npm run build && npm start",
-    "debug": "node scripts/debug-helper.js"
+    "nx": "nx",
+    "format": "nx format:write",
+    "lint": "nx run-many --target=lint --all",
+    "test": "nx test",
+    "build": "nx build"
   },
   "dependencies": {
-    "express": "^5.1.0",
-    "ejs": "^3.1.9",
-    "express-session": "^1.17.3",
-    "node-fetch": "^3.3.2",
-    "dotenv": "^16.3.1",
-    "express-ejs-layouts": "^2.5.1",
     "axios": "1.9.0",
-    "node-cache": "^5.1.2"
+    "dotenv": "16.3.1",
+    "ejs": "3.1.9",
+    "express": "5.1.0",
+    "express-ejs-layouts": "2.5.1",
+    "express-session": "1.17.3",
+    "node-cache": "5.1.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/express-session": "^1.17.10",
-    "@types/node": "^22.15.18",
-    "@types/node-fetch": "^2.6.11",
-    "@types/node-cache": "^4.2.5",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.26.0",
+    "@nx/eslint": "21.0.3",
+    "@nx/eslint-plugin": "21.0.3",
+    "@types/express": "5.0.1",
+    "@types/express-session": "1.17.10",
+    "@types/node": "22.15.1",
+    "@types/node-fetch": "2.6.11",
+    "@typescript-eslint/eslint-plugin": "8.32.1",
+    "@typescript-eslint/parser": "8.32.1",
+    "eslint": "9.26.0",
+    "eslint-config-prettier": "10.1.5",
+    "eslint-plugin-prettier": "5.4.0",
+    "nx": "21.0.3",
+    "prettier": "3.5.3",
+    "typescript-eslint": "8.32.1"
   },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "volta": {
-    "node": "22.15.0"
+    "node": "22.15.1"
   }
 }

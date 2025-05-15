@@ -2,13 +2,13 @@
 
 /**
  * Environment Setup Script
- * 
+ *
  * This script helps with switching between different environment configurations.
  * It copies the specified environment file to .env in the project root.
- * 
+ *
  * Usage:
  *   node scripts/env-setup.js [env]
- * 
+ *
  * Where [env] is one of:
  *   - local (default)
  *   - prod
@@ -33,7 +33,7 @@ const sourceFile = envFiles[targetEnv];
 if (!sourceFile) {
   console.error(`Error: Unknown environment "${targetEnv}"`);
   console.log('Available environments:');
-  Object.keys(envFiles).forEach(env => {
+  Object.keys(envFiles).forEach((env) => {
     console.log(`  - ${env}`);
   });
   process.exit(1);
@@ -50,8 +50,10 @@ if (!fs.existsSync(sourcePath)) {
 const destPath = path.join(__dirname, '..', '.env');
 try {
   fs.copyFileSync(sourcePath, destPath);
-  console.log(`Successfully set environment to "${targetEnv}" (copied ${sourceFile} to .env)`);
+  console.log(
+    `Successfully set environment to "${targetEnv}" (copied ${sourceFile} to .env)`,
+  );
 } catch (error) {
   console.error(`Error copying file: ${error.message}`);
   process.exit(1);
-} 
+}
