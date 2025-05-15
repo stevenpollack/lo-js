@@ -1,4 +1,5 @@
 import nx from '@nx/eslint-plugin';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default [
   ...nx.configs['flat/base'],
@@ -25,6 +26,7 @@ export default [
       ],
     },
   },
+  eslintPluginPrettierRecommended,
   {
     files: [
       '**/*.ts',

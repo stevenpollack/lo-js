@@ -6,7 +6,7 @@
   "scripts": {
     "nx": "nx",
     "format": "nx format:write",
-    "lint": "nx lint",
+    "lint": "nx run-many --target=lint --all",
     "test": "nx test",
     "build": "nx build"
   },
@@ -32,7 +32,9 @@
     "@typescript-eslint/parser": "8.32.1",
     "eslint": "9.26.0",
     "eslint-config-prettier": "10.1.5",
+    "eslint-plugin-prettier": "5.4.0",
     "nx": "21.0.3",
+    "prettier": "3.5.3",
     "typescript-eslint": "8.32.1"
   },
   "workspaces": [
