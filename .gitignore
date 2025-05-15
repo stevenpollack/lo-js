@@ -1,1 +1,6 @@
 node_modules/
+.nx/
+.cursor/
+.github/instructions/nx.instructions.md
+dist/
+.vscode/

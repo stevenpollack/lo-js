@@ -30,9 +30,11 @@
     "@types/node-fetch": "^2.6.11",
     "@types/node-cache": "^4.2.5",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "nx": "21.0.3"
   },
   "volta": {
     "node": "22.15.0"
-  }
+  },
+  "nx": {}
 }
